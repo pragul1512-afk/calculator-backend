@@ -15,17 +15,16 @@ app.use(express.json());
 app.use("/api/auth", authRoutes);
 app.use("/api", calculatorRoutes);
 
-// Flutter Web frontend
+// Flutter Web frontend static files
 const PUBLIC_DIR = path.join(__dirname, "public", "web");
-
 app.use(express.static(PUBLIC_DIR));
 
-// Open Flutter UI at /
-app.get("*", (req, res, next) => {
-  if (req.path.startsWith("/api")) {
-    return next();
+// Serve Flutter UI index.html for non-API GET requests
+app.use((req, res, next) => {
+  if (req.method === "GET" && !req.path.startsWith("/api")) {
+    return res.sendFile(path.join(PUBLIC_DIR, "index.html"));
   }
-  res.sendFile(path.join(PUBLIC_DIR, "index.html"));
+  next();
 });
 
 const PORT = process.env.PORT || 3000;
