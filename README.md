@@ -1,47 +1,40 @@
 # Calculator Backend
 
-Node.js & Express REST API backend for the Calculator application.
+Node.js & Express REST API backend with PostgreSQL database integration for the Calculator application.
 
 ## API Endpoints
 
 ### `POST /api/calculate`
+Performs arithmetic calculations (`+`, `-`, `*`, `/`) and saves the record in PostgreSQL.
 
-Performs arithmetic calculations (`+`, `-`, `*`, `/`).
+### `GET /api/history`
+Retrieves calculation history from PostgreSQL.
 
-#### Request Body
-```json
-{
-  "num1": 10,
-  "num2": 5,
-  "operator": "+"
-}
-```
+### `PUT /api/history/:id`
+Updates a history record by ID.
 
-#### Successful Response (`200 OK`)
-```json
-{
-  "num1": 10,
-  "num2": 5,
-  "operator": "+",
-  "result": 15
-}
-```
-
-#### Error Response (`400 Bad Request`)
-```json
-{
-  "error": "Cannot divide by zero"
-}
-```
+### `DELETE /api/history/:id`
+Deletes a history record by ID.
 
 ## Getting Started
 
-### Installation
+### 1. Installation
 ```bash
 npm install
 ```
 
-### Running the Server
+### 2. Environment Variables
+Create a `.env` file in the root directory (based on `.env.example`):
+```env
+PORT=3000
+DB_USER=postgres
+DB_HOST=localhost
+DB_NAME=calculator_db
+DB_PASSWORD=your_password
+DB_PORT=5432
+```
+
+### 3. Running the Server
 ```bash
 npm start
 ```
